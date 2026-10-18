@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>NEUROPATH</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050A18;--bg2:#0A142A;--pn:#101C32;--red:#FF244D;--cy:#00BFFF;--ice:#D9F5FF;--bl:#3478FF;--tx:#F2F6FF;--mu:#8DA5C5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{color:var(--tx);font:16px/1.5 Inter,system-ui,sans-serif;background:
+radial-gradient(1px 1px at 20px 30px,#fff9,transparent),radial-gradient(1px 1px at 120px 90px,#9cf8,transparent),radial-gradient(1.5px 1.5px at 170px 160px,#fff6,transparent),
+radial-gradient(60% 50% at 80% 10%,#3478ff22,transparent),radial-gradient(50% 40% at 10% 90%,#ff244d14,transparent),var(--bg);background-size:200px 200px,200px 200px,200px 200px,auto,auto,auto;background-attachment:fixed}
+h1,h2,h3,.t{font-family:Orbitron,'Space Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#050A18cc;backdrop-filter:blur(10px);border-bottom:1px solid #00bfff22;z-index:20}
+.lg{font-weight:800;color:var(--ice);text-shadow:0 0 14px var(--cy);background:none;border:0;font-size:18px}
+nav{display:flex;gap:4px}nav button{background:none;border:0;color:var(--mu);padding:8px 12px;border-radius:8px;font-size:14px}nav button:hover,nav button.on{color:var(--ice);background:#00bfff14}
+.v{display:none;min-height:100vh;padding:90px 20px 40px}.v.on{display:block}
+.btn{border:0;border-radius:10px;padding:14px 26px;font-family:Orbitron,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,#FF244D,#c4123a);box-shadow:0 0 24px #FF244D66;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 34px #FF244Daa}.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none;transform:none}
+.btn.o{background:transparent;border:1px solid var(--cy);box-shadow:none;color:var(--ice)}.btn.o:hover{box-shadow:0 0 18px #00bfff66}
+.btn.ld{pointer-events:none;color:transparent;position:relative}.btn.ld::after{content:"";position:absolute;inset:0;margin:auto;width:18px;height:18px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.glass{background:#101C32cc;border:1px solid #00bfff2a;border-radius:16px;backdrop-filter:blur(14px)}
+/* home */
+#home{text-align:center;display:none;flex-direction:column;align-items:center}#home.on{display:flex}
+#home h1{font-size:clamp(30px,7vw,76px);line-height:1.05;max-width:900px;color:var(--ice);text-shadow:0 0 30px #00bfff66}
+#home p{color:var(--mu);max-width:560px;margin:20px auto 28px;font-size:18px}
+.hero{width:min(900px,100%);height:340px;margin-bottom:-60px;opacity:.9}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;width:100%;margin-top:56px}
+.feat div{padding:18px;text-align:left;border-left:2px solid var(--cy);background:#0A142A99;color:var(--mu)}.feat b{display:block;color:var(--ice);margin-bottom:4px}
+/* forms */
+#reg{display:none;align-items:center;justify-content:center;gap:40px}#reg.on{display:flex}
+#reg .art{width:min(420px,40vw);height:520px}
+.card{width:min(440px,100%);padding:32px;border:1px solid var(--red);box-shadow:0 0 40px #ff244d44,inset 0 0 30px #ff244d12;border-radius:6px;background:#0A142Aee}
+.card h2{font-size:22px;color:var(--ice)}.card .sub{color:var(--mu);margin:8px 0 20px;font-size:14px}
+label{display:block;font-size:13px;color:var(--mu);margin:14px 0 6px}
+.f{position:relative}.f input,.f select{width:100%;padding:12px 14px;background:#050A18;border:1px solid #3478ff55;border-radius:8px;color:var(--tx);font:inherit;color-scheme:dark}
+.f input:focus,.f select:focus{outline:0;border-color:var(--cy);box-shadow:0 0 14px #00bfff55}
+.f.bad input,.f.bad select{border-color:var(--red)}.er{color:#ff6b86;font-size:12px;min-height:0;margin-top:4px}
+.eye{position:absolute;right:6px;top:5px;background:none;border:0;padding:6px 8px;color:var(--mu)}
+.lnk{background:none;border:0;color:var(--cy);padding:0;text-decoration:underline}
+/* test */
+#test{display:none;grid-template-columns:1fr 260px;gap:24px;max-width:1100px;margin:0 auto}#test.on{display:grid}
+.prog{height:6px;background:#10203a;border-radius:3px;overflow:hidden;margin:6px 0 4px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cy),var(--red));box-shadow:0 0 12px var(--cy);transition:.4s}
+.q{padding:40px 28px;text-align:center}.q h2{font-size:clamp(20px,3.4vw,32px);color:var(--ice);margin:16px 0 10px}.q p{color:var(--mu);margin:0 auto 30px;max-width:480px}
+.opts{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.o5{width:104px;background:none;border:0;text-align:center;color:var(--mu);font-size:12px}
+.o5 b{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 8px;border-radius:50%;border:1.5px solid #00bfff66;font:800 20px Orbitron;color:var(--ice);transition:.2s}
+.o5:hover b{box-shadow:0 0 18px #00bfff88;transform:scale(1.06)}.o5.s b{background:#ff244d33;border-color:var(--red);box-shadow:0 0 24px #FF244D99}.o5.s{color:var(--tx)}
+.nav2{display:flex;justify-content:space-between;margin-top:34px}
+.side{padding:16px;align-self:start}.side h3{font-size:12px;color:var(--mu);margin-bottom:10px}
+.side li{list-style:none;display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:var(--mu)}.side ul{margin:0;padding:0}
+.dot{width:10px;height:10px;border-radius:50%;border:1.5px solid #3b5278;flex:none}.p .dot{border-color:var(--cy);box-shadow:0 0 8px var(--cy)}.p{color:var(--ice)}.d .dot{background:var(--cy);border-color:var(--cy)}
+.center{text-align:center;max-width:600px;margin:0 auto;padding-top:40px}.center h2{font-size:clamp(22px,4vw,34px);color:var(--ice);margin:18px 0 26px}
+.core{width:260px;height:260px;margin:0 auto}
+/* tree */
+#tree{position:fixed;inset:60px 0 0 0;padding:0;min-height:0;overflow:hidden}
+#tree.on{display:block}
+#svg{width:100%;height:100%;touch-action:none;cursor:grab;display:block}
+.nd{cursor:pointer}.nd circle.c{fill:#0A142A;stroke:var(--cy);filter:drop-shadow(0 0 6px var(--cy));transition:.3s}
+.nd:hover circle.c{filter:drop-shadow(0 0 16px var(--ice))}.nd.sel circle.c{stroke:var(--red);filter:drop-shadow(0 0 14px var(--red))}
+.nd text{fill:var(--ice);text-anchor:middle;pointer-events:none}.nd .nm{font:600 12px Orbitron;letter-spacing:.08em}.nd .pc{font:800 17px Orbitron}
+.you .c{animation:pu 3s ease-in-out infinite}@keyframes pu{50%{filter:drop-shadow(0 0 22px var(--ice))}}
+.nw{animation:fi 1s ease-out both}@keyframes fi{from{opacity:0}}
+.ed{fill:none;stroke:var(--ice);stroke-width:1.6;opacity:.28;filter:drop-shadow(0 0 4px var(--cy))}.ed.hot{opacity:1;stroke-width:2.2}
+.ed.nw{stroke-dasharray:600;animation:dr 1.2s ease-out both}@keyframes dr{from{stroke-dashoffset:600}}
+.el{fill:var(--cy);font:600 12px Inter;text-anchor:middle}
+.hud{position:absolute;left:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;max-width:310px}
+.hud .glass{padding:12px 14px;font-size:13px;color:var(--mu)}
+.zoom{position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;gap:6px}.zoom button{width:40px;height:40px;background:#101C32cc;border:1px solid #00bfff44;border-radius:10px}
+.bar{display:flex;gap:2px;margin-top:6px}.bar i{height:4px;flex:1;background:#17294a}.bar i.f{background:var(--cy);box-shadow:0 0 6px var(--cy)}
+#info{position:fixed;top:calc(60px + env(safe-area-inset-top,0px));right:0;bottom:0;width:min(420px,100%);overflow:auto;padding:22px;transform:translateX(105%);transition:.35s;z-index:15;border-radius:16px 0 0 16px}
+#info.open{transform:none}#info h2{font-size:22px;color:var(--ice)}#info h3{font-size:12px;color:var(--cy);margin:20px 0 8px}
+#info p{color:var(--mu);margin:6px 0;font-size:14px}.x{position:absolute;right:14px;top:12px;background:none;border:0;font-size:22px;color:var(--mu)}
+.mt{font:800 15px Orbitron;color:var(--red);margin-top:6px}
+.tag{display:inline-block;padding:3px 10px;margin:0 6px 6px 0;border:1px solid #00bfff55;border-radius:99px;font-size:12px}.tag.w{border-color:#ff244d88;color:#ff9db0}
+.res{padding:12px;border:1px solid #3478ff33;border-radius:10px;margin-bottom:8px;font-size:13px}.res b{display:block;color:var(--ice)}.res small{color:var(--mu)}
+.ad{border-style:dashed;border-color:#ff244d66}.ad em{font-style:normal;font-size:11px;color:#ff9db0;border:1px solid #ff244d66;padding:0 6px;border-radius:4px;float:right}
+.res a{color:var(--cy);font-size:12px;text-decoration:none}
+/* modals */
+.ov{position:fixed;inset:0;background:#050A18b8;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}.ov.on{display:flex}
+.md{width:min(560px,100%);max-height:92vh;overflow:auto;padding:26px;border-color:#ff244d77;box-shadow:0 0 40px #ff244d33}
+.md h2{font-size:20px;color:var(--ice)}.md .sub{color:var(--mu);font-size:14px;margin:6px 0 14px}
+.sl{display:grid;grid-template-columns:1fr 130px 70px;gap:10px;align-items:center;font-size:13px;padding:4px 0}
+.sl input{accent-color:var(--red);width:100%}.sl span{text-align:right;color:var(--mu)}.sl span.ch{color:var(--cy);font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.cmp{margin-top:14px;padding:12px;border:1px solid #00bfff44;border-radius:10px;font-size:14px}.cmp div{display:flex;justify-content:space-between;padding:3px 0}.up{color:var(--cy)}.dn{color:var(--mu)}
+.msg{color:#ffb3c1;font-size:13px;margin-top:10px}
+@media(max-width:760px){nav button{padding:8px 6px;font-size:12px}#reg .art{display:none}#test{grid-template-columns:1fr}.side{order:-1}.side ul{display:flex;flex-wrap:wrap;gap:2px 14px}.hud{max-width:60%}
+#info{top:auto;height:68%;width:100%;border-radius:16px 16px 0 0;transform:translateY(105%)}#info.open{transform:none}.sl{grid-template-columns:1fr 90px 56px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><button class="lg" onclick="go('home')">NEUROPATH</button>
+<nav><button data-n="home" onclick="go('home')">Главная</button><button onclick="go('home');document.querySelector('.feat').scrollIntoView({behavior:'smooth'})">О проекте</button><button data-n="prof" onclick="go('prof')">Профессии</button><button data-n="tree" onclick="go('tree')">Дерево</button><button data-n="reg" onclick="go('reg')">Войти</button></nav></header>
+
+<section class="v on" id="home">
+<svg class="hero" id="h1" viewBox="0 0 900 340"></svg>
+<h1>Your future is not defined</h1>
+<p>Исследуй свои компетенции. Открой альтернативные карьерные пути. Узнай, каким может стать твоё будущее в IT.</p>
+<button class="btn" onclick="go('reg')">Начать исследование →</button>
+<div class="feat"><div><b>Анализ компетенций</b>15 навыков, оценка от 1 до 5</div><div><b>Карта карьерных возможностей</b>Две ближайшие профессии из ядра</div><div><b>Симуляция траекторий</b>Измени навык и увидь новую ветвь</div></div>
+</section>
+
+<section class="v" id="reg">
+<svg class="art" id="h2" viewBox="0 0 420 520"></svg>
+<form class="card" id="rf" novalidate>
+<h2>Create your profile</h2><div class="sub">Создай профиль, чтобы начать исследование своих карьерных возможностей.</div>
+<label for="em">Электронная почта</label><div class="f"><input id="em" type="email" autocomplete="email"></div><div class="er"></div>
+<label for="p1">Пароль</label><div class="f"><input id="p1" type="password" autocomplete="new-password"><button type="button" class="eye" aria-label="Показать пароль" onclick="eye(this)">👁</button></div><div class="er"></div>
+<label for="p2">Повторите пароль</label><div class="f"><input id="p2" type="password" autocomplete="new-password"></div><div class="er"></div>
+<label for="bd">Дата рождения</label><div class="f"><input id="bd" type="date"></div><div class="er"></div>
+<label for="gn">Пол (необязательно)</label><div class="f"><select id="gn"><option>Предпочитаю не указывать</option><option>Мужской</option><option>Женский</option><option>Другое</option></select></div>
+<div class="row"><button class="btn" id="rb" style="width:100%">Создать аккаунт</button></div>
+<p style="text-align:center;font-size:14px;color:var(--mu)">Уже есть аккаунт? <button type="button" class="lnk" onclick="go('reg')">Войти</button></p>
+</form></section>
+
+<section class="v" id="test">
+<div class="glass q"><div class="t" style="font-size:12px;display:flex;justify-content:space-between;color:var(--mu)"><span>NEUROPATH</span><span id="qn"></span></div><div class="prog"><i id="pg"></i></div>
+<h2 id="qt"></h2><p>Оцени свой уровень от 1 до 5. Ответы помогут построить твой компетентностный профиль.</p><div class="opts" id="qo"></div>
+<div class="nav2"><button class="btn o" id="bk">← Назад</button><button class="btn" id="nx">Далее →</button></div></div>
+<aside class="glass side"><h3 class="t">Компетенции</h3><ul id="sl"></ul></aside></section>
+
+<section class="v" id="calc"><div class="center"><svg class="core" id="h3" viewBox="0 0 260 260"></svg><h2 id="ct">Считаю профиль…</h2><button class="btn" id="cb" style="display:none" onclick="go('tree')">Открыть карту будущего →</button><div class="msg" id="ce"></div></div></section>
+
+<section class="v" id="prof"><h2 class="t" style="text-align:center;margin-bottom:24px;color:var(--ice)">Профессии</h2><div class="feat" style="max-width:1000px;margin:auto" id="pl"></div></section>
+
+<section class="v" id="tree">
+<div id="empty" class="center" style="display:none;padding-top:120px"><h2>Карта пуста</h2><p style="color:var(--mu);margin-bottom:20px">Пройди диагностику, и из ядра вырастут первые две ветви.</p><button class="btn" onclick="go('test')">Пройти тест →</button></div>
+<svg id="svg"></svg>
+<div class="hud" id="hud"><button class="btn" onclick="openWI()">Что если?</button><div class="glass">Измени одну компетенцию и исследуй альтернативную траекторию.<div class="bar" id="pb"></div><div id="tm"></div></div>
+<div style="display:flex;gap:8px"><button class="btn o" id="par" onclick="toParent()">↑ К родителю</button><button class="btn o" onclick="ask()">Сбросить</button></div></div>
+<div class="zoom"><button onclick="zm(.8)" aria-label="Приблизить">+</button><button onclick="zm(1.25)" aria-label="Отдалить">−</button></div>
+</section>
+<aside id="info" class="glass"></aside>
+
+<div class="ov" id="wi"><div class="glass md"><h2>What if you evolve?</h2><div class="sub">Выбери компетенцию, которую хочешь развить, и посмотри, какие карьерные возможности откроются.</div><div id="wl"></div><div id="wr"></div>
+<div class="row"><button class="btn" id="rc">Пересчитать траекторию</button><button class="btn o" id="ap" style="display:none">Показать на дереве</button><button class="btn o" id="cn">Отменить изменения</button></div></div></div>
+<div class="ov" id="cf"><div class="glass md"><h2>Сбросить дерево?</h2><div class="sub">Все симуляции будут удалены, останутся две первые ветви.</div><div class="row"><button class="btn" id="cy">Сбросить</button><button class="btn o" onclick="$('#cf').classList.remove('on')">Остаться</button></div></div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const K={py:'Python',js:'JavaScript',ts:'TypeScript',cs:'C#',java:'Java',kt:'Kotlin',sw:'Swift',sql:'SQL',web:'HTML/CSS',bash:'Bash',git:'Git',lin:'Linux',net:'Компьютерные сети',qa:'Тестирование и отладка',ml:'Machine Learning / Data Science'};
+const KS=Object.keys(K),LV=['Начальный уровень','Знаю основы','Уверенный базовый уровень','Продвинутый уровень','Экспертный уровень'];
+const P={
+da:{n:'Data Analyst',r:{py:3,sql:4,ml:2,git:2},x:['de','ds'],d:'Превращает данные в выводы: строит отчёты и дашборды, проверяет гипотезы, помогает бизнесу принимать решения.'},
+be:{n:'Backend Developer',r:{py:4,sql:3,git:3,lin:2,net:2},x:['fs','dv','de'],d:'Проектирует серверную логику, API и базы данных для веб- и мобильных продуктов.'},
+de:{n:'Data Engineer',r:{py:4,sql:4,lin:3,git:3,bash:2},x:['mle','dv'],d:'Строит конвейеры данных и хранилища, на которых работают аналитики и модели.'},
+ds:{n:'Data Scientist',r:{py:4,ml:4,sql:3,git:2},x:['mle','de'],d:'Обучает модели на данных и проверяет, какие из них решают задачу продукта.'},
+mle:{n:'ML Engineer',r:{py:5,ml:4,git:3,lin:3,qa:2},x:['dv'],d:'Выводит модели машинного обучения в продакшен и следит за их качеством.'},
+fe:{n:'Frontend Developer',r:{js:4,ts:3,web:4,git:3,qa:2},x:['fs','mob'],d:'Создаёт интерфейсы, с которыми работает пользователь в браузере.'},
+fs:{n:'Fullstack Developer',r:{js:4,ts:3,web:3,sql:3,git:3,py:3},x:['dv','be'],d:'Берёт на себя и клиентскую, и серверную часть продукта.'},
+dv:{n:'DevOps Engineer',r:{lin:4,bash:4,git:4,net:3,py:2},x:['sec','de'],d:'Автоматизирует сборку, развёртывание и мониторинг сервисов.'},
+qa:{n:'QA Automation',r:{qa:4,py:3,git:3,sql:2,bash:2},x:['dv','be'],d:'Пишет автотесты и находит дефекты до того, как их увидят пользователи.'},
+mob:{n:'Mobile Developer',r:{kt:4,sw:3,git:3,qa:2,net:2},x:['fe','be'],d:'Разрабатывает приложения для Android и iOS.'},
+dn:{n:'.NET Developer',r:{cs:4,sql:3,git:3,web:2,qa:2},x:['fs','be'],d:'Пишет корпоративные сервисы и приложения на платформе .NET.'},
+jv:{n:'Java Developer',r:{java:4,sql:3,git:3,lin:2,qa:2},x:['be','dv'],d:'Разрабатывает надёжные серверные системы на Java.'},
+sec:{n:'Security Engineer',r:{net:4,lin:4,bash:3,py:3,git:2},x:['dv'],d:'Ищет уязвимости, настраивает защиту инфраструктуры и реагирует на инциденты.'}};
+const S={pf:{},base:null,nodes:[],sel:null,i:0,id:1,W:null,fresh:new Set()};
+const m=(pf,k)=>{let r=P[k].r,a=0,b=0;for(const s in r){a+=Math.min(pf[s]||0,r[s]);b+=r[s]}return Math.round(a/b*100)};
+function go(v){$$('.v').forEach(e=>e.classList.toggle('on',e.id==v));$('#info').classList.remove('open');$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.n==v));
+if(v=='test')qs();if(v=='tree')initTree();scrollTo(0,0)}
+/* neural art */
+function rnd(s){return()=>(s=(s*16807)%2147483647)/2147483647}
+function art(el,seed,cx,cy,len,red){let r=rnd(seed),W=+el.viewBox.baseVal.width,H=+el.viewBox.baseVal.height,o='<defs><radialGradient id="g'+seed+'"><stop offset="0" stop-color="#D9F5FF"/><stop offset="1" stop-color="#00BFFF" stop-opacity="0"/></radialGradient></defs>';
+(function b(x,y,a,l,d){if(d>5||l<12)return;let x2=x+Math.cos(a)*l,y2=y+Math.sin(a)*l,c=red&&r()<.25?'#FF244D':'#00BFFF';o+=`<path d="M${x},${y}Q${(x+x2)/2+(r()-.5)*30},${(y+y2)/2+(r()-.5)*30} ${x2},${y2}" stroke="${c}" stroke-width="${Math.max(.6,2.4-d*.4)}" fill="none" opacity="${.9-d*.12}" style="filter:drop-shadow(0 0 4px ${c})"/>`;if(d>1)o+=`<circle cx="${x2}" cy="${y2}" r="2.5" fill="#D9F5FF"/>`;b(x2,y2,a+.5*(r()+.2),l*.74,d+1);b(x2,y2,a-.5*(r()+.2),l*.74,d+1)})
+;for(let i=0;i<7;i++){let a=i/7*6.28+r();(function b(x,y,a,l,d){if(d>5||l<12)return;let x2=x+Math.cos(a)*l,y2=y+Math.sin(a)*l,c=red&&r()<.25?'#FF244D':'#00BFFF';o+=`<path d="M${x},${y}Q${(x+x2)/2+(r()-.5)*30},${(y+y2)/2+(r()-.5)*30} ${x2},${y2}" stroke="${c}" stroke-width="${Math.max(.6,2.4-d*.4)}" fill="none" opacity="${.9-d*.12}" style="filter:drop-shadow(0 0 4px ${c})"/>`;if(d>1)o+=`<circle cx="${x2}" cy="${y2}" r="2.5" fill="#D9F5FF"/>`;b(x2,y2,a+.5*(r()+.2),l*.74,d+1);b(x2,y2,a-.5*(r()+.2),l*.74,d+1)})(cx,cy,a,len,0)}
+o+=`<circle cx="${cx}" cy="${cy}" r="${len/3}" fill="url(#g${seed})"/>`;el.innerHTML=o}
+art($('#h1'),7,450,170,70,1);art($('#h2'),11,210,260,60,1);art($('#h3'),5,130,130,36,1);
+/* registration */
+function eye(b){let i=b.parentNode.querySelector('input');i.type=i.type=='password'?'text':'password'}
+function err(id,t){let f=$('#'+id).closest('.f');f.classList.toggle('bad',!!t);f.parentNode.querySelector('.f+.er,.f ~ .er');f.nextElementSibling.textContent=t||''}
+$('#rf').onsubmit=e=>{e.preventDefault();let ok=1,v=id=>$('#'+id).value;
+const c=(id,bad,t)=>{err(id,bad?t:'');if(bad)ok=0};
+c('em',!/^\S+@\S+\.\S+$/.test(v('em')),'Введи почту в формате name@mail.com');
+c('p1',v('p1').length<8,'Минимум 8 символов');
+c('p2',v('p2')!=v('p1')||!v('p2'),'Пароли не совпадают');
+c('bd',!v('bd')||new Date(v('bd'))>new Date(),'Укажи корректную дату рождения');
+if(!ok)return;const b=$('#rb');b.classList.add('ld');setTimeout(()=>{b.classList.remove('ld');S.i=0;S.pf={};go('test')},900)};
+/* test */
+function qs(){const k=KS[S.i];$('#qn').textContent=`Вопрос ${S.i+1} из ${KS.length}`;$('#pg').style.width=(S.i/KS.length*100)+'%';
+$('#qt').textContent='Какой у тебя уровень знаний в '+(k=='ml'||k=='net'||k=='qa'?K[k]:K[k])+'?';
+$('#qo').innerHTML=LV.map((l,i)=>`<button class="o5 ${S.pf[k]==i+1?'s':''}" data-v="${i+1}"><b>${i+1}</b>${l}</button>`).join('');
+$$('.o5').forEach(b=>b.onclick=()=>{S.pf[k]=+b.dataset.v;qs()});
+$('#bk').disabled=S.i==0;$('#nx').disabled=!S.pf[k];$('#nx').textContent=S.i==KS.length-1?'Завершить →':'Далее →';
+$('#sl').innerHTML=KS.map((x,i)=>`<li class="${i<S.i&&S.pf[x]?'d':i==S.i?'p':''}"><span class="dot"></span>${K[x]}</li>`).join('')}
+$('#bk').onclick=()=>{S.i--;qs()};
+$('#nx').onclick=()=>{if(S.i<KS.length-1){S.i++;qs()}else calc()};
+function calc(){go('calc');$('#ct').textContent='Считаю профиль…';$('#cb').style.display='none';$('#ce').innerHTML='';
+setTimeout(()=>{try{if(KS.some(k=>!S.pf[k]))throw 0;S.base={...S.pf};S.built=0;$('#ct').textContent='Твой профиль сформирован';$('#cb').style.display=''}catch(e){$('#ct').textContent='Не удалось загрузить результаты';$('#ce').innerHTML='Проверь, что отвечены все вопросы. <button class="lnk" onclick="go(\'test\')">Вернуться к тесту</button>'}},1600)}
+/* professions */
+$('#pl').innerHTML=Object.values(P).map(p=>`<div><b>${p.n}</b>${p.d}</div>`).join('');
+/* tree */
+const V={x:0,y:0,w:1200,h:900};
+function vb(){$('#svg').setAttribute('viewBox',`${V.x} ${V.y} ${V.w} ${V.h}`)}
+function fit(){const s=$('#svg').getBoundingClientRect(),w=s.width<600?820:1250;V.w=w;V.h=w*s.height/s.width;V.x=800-V.w/2+(s.width>760?-60:0);V.y=500-V.h/2;vb()}
+function zm(f){const cx=V.x+V.w/2,cy=V.y+V.h/2;V.w*=f;V.h*=f;V.x=cx-V.w/2;V.y=cy-V.h/2;vb()}
+function initTree(){const ok=!!S.base;$('#empty').style.display=ok?'':'none';$('#svg').style.display=ok?'':'none';$('#hud').style.display=ok?'':'none';if(!ok)return;
+if(!S.built){reset()}else draw();fit()}
+function reset(){const top=Object.keys(P).sort((a,b)=>m(S.base,b)-m(S.base,a)).slice(0,2);
+S.nodes=[{id:0,p:null,x:800,y:500,pf:{...S.base},par:null}];S.id=1;
+top.forEach((k,i)=>{const a=(i?-20:200)*Math.PI/180;S.nodes.push({id:S.id++,p:k,par:0,a:a*180/Math.PI,x:800+Math.cos(a)*270,y:500+Math.sin(a)*270,pf:{...S.base},lab:i?'Профиль':'Профиль'})});
+S.nodes.forEach(n=>S.fresh.add(n.id));S.sel=1;S.built=1;draw()}
+const nd=id=>S.nodes.find(n=>n.id==id);
+function chain(n){let c=[];while(n){c.push(n.id);n=nd(n.par)}return c}
+function draw(){const sc=S.sel!=null?chain(nd(S.sel)):[];let h='';
+S.nodes.filter(n=>n.par!=null).forEach(n=>{const p=nd(n.par),mx=(p.x+n.x)/2,my=(p.y+n.y)/2,dx=n.x-p.x,dy=n.y-p.y;
+h+=`<path class="ed ${sc.includes(n.id)?'hot':''} ${S.fresh.has(n.id)?'nw':''}" d="M${p.x},${p.y}Q${mx-dy*.15},${my+dx*.15} ${n.x},${n.y}"/>`;
+if(n.lab&&n.lab!='Профиль')h+=`<text class="el ${S.fresh.has(n.id)?'nw':''}" x="${mx-dy*.1}" y="${my+dx*.1-6}">${n.lab}</text>`});
+S.nodes.forEach(n=>{const y=n.p==null,r=y?56:46,pc=y?0:m(n.pf,n.p),nm=y?'YOU':P[n.p].n.toUpperCase(),w=nm.split(' ');
+let tx=w.length>1&&nm.length>12?`<tspan x="0" dy="0">${w.slice(0,-1).join(' ')}</tspan><tspan x="0" dy="14">${w.slice(-1)}</tspan>`:nm;
+h+=`<g class="nd ${y?'you':''} ${S.sel==n.id?'sel':''} ${S.fresh.has(n.id)?'nw':''}" data-id="${n.id}" transform="translate(${n.x} ${n.y})" tabindex="0" role="button" aria-label="${nm}"><circle class="c" r="${r}" stroke-width="${y?2:1+pc/50}" opacity="${y?1:.55+pc/230}"/>
+${y?'<circle r="14" fill="none" stroke="#D9F5FF" stroke-width="1.5"/><circle r="4" fill="#D9F5FF"/>':`<text class="pc" y="6">${pc}%</text>`}<text class="nm" y="${r+20}">${y?'YOU':tx}</text></g>`});
+$('#svg').innerHTML=h;S.fresh.clear();hud()}
+function hud(){const ex=S.nodes.filter(n=>n.p&&!n.ex).length;$('#pb').innerHTML=S.nodes.filter(n=>n.p).map(n=>`<i class="${n.ex?'f':''}"></i>`).join('');
+$('#tm').textContent=ex?`Не исследовано узлов: ${ex}`:'Ты исследовал все доступные узлы.';$('#par').disabled=!S.sel||!nd(S.sel).par||nd(S.sel).par==0}
+function toParent(){const n=nd(S.sel);if(n&&n.par){S.sel=n.par;draw();n.par?show(S.sel):0}}
+/* pan/zoom/click */
+{const s=$('#svg'),P2=new Map();let mv=0,d0=0;
+s.onpointerdown=e=>{P2.set(e.pointerId,e);mv=0;if(P2.size==2){const [a,b]=[...P2.values()];d0=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}};
+addEventListener('pointermove',e=>{if(!P2.has(e.pointerId))return;const o=P2.get(e.pointerId),r=s.getBoundingClientRect();
+if(P2.size==2){P2.set(e.pointerId,e);const [a,b]=[...P2.values()],d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);if(d0)zm(d0/d);d0=d;mv=9;return}
+const dx=e.clientX-o.clientX,dy=e.clientY-o.clientY;mv+=Math.abs(dx)+Math.abs(dy);if(mv>6){V.x-=dx*V.w/r.width;V.y-=dy*V.h/r.height;vb()}P2.set(e.pointerId,e)});
+addEventListener('pointerup',e=>P2.delete(e.pointerId));
+s.onclick=e=>{if(mv>6)return;const g=e.target.closest('.nd');if(g)pick(+g.dataset.id)};
+s.onkeydown=e=>{if(e.key=='Enter'){const g=e.target.closest('.nd');if(g)pick(+g.dataset.id)}};
+s.onwheel=e=>{e.preventDefault();zm(e.deltaY>0?1.1:.9)}}
+function pick(id){const n=nd(id);if(!n.p)return;S.sel=id;draw();show(id)}
+function show(id){const n=nd(id),p=P[n.p],pc=m(n.pf,n.p),rq=Object.entries(p.r),st=rq.filter(([k,v])=>n.pf[k]>=v),wk=rq.filter(([k,v])=>n.pf[k]<v),k0=rq[0][0];
+$('#info').innerHTML=`<button class="x" onclick="$('#info').classList.remove('open')" aria-label="Закрыть">×</button><h2>${p.n}</h2><div class="mt">YOUR MATCH — ${pc}%</div><p>${p.d}</p>
+<h3 class="t">О профессии</h3><p>${p.d} Работает в командах продуктов и сервисов, где важны данные, код и качество.</p>
+<h3 class="t">Ключевые компетенции</h3>${rq.map(([k,v])=>`<span class="tag">${K[k]} ${v}/5</span>`).join('')}
+<h3 class="t">Твои сильные стороны</h3>${st.map(([k])=>`<span class="tag">${K[k]}</span>`).join('')||'<p>Пока совпадений нет.</p>'}
+<h3 class="t">Что можно развить</h3>${wk.map(([k,v])=>`<span class="tag w">${K[k]}: ${n.pf[k]||0} → ${v}</span>`).join('')||'<p>Все ключевые навыки на нужном уровне.</p>'}
+<h3 class="t">Карьерное развитие</h3><p>Следующие направления: ${p.x.map(x=>P[x].n).join(', ')}.</p>
+<h3 class="t">Рекомендуемые материалы</h3>
+<div class="res"><b>${K[k0]}: основы и практика</b><small>Stepik · Пример курса</small><br><a href="#">Перейти к курсу</a></div>
+<div class="res"><b>Практикум по ${K[rq[1][0]]}</b><small>Coursera · Пример курса</small><br><a href="#">Перейти к курсу</a></div>
+<div class="res ad"><em>Реклама</em><b>Партнёрский материал</b><small>Место для образовательного предложения партнёра</small></div>
+<div class="row"><button class="btn" onclick="openWI()">Исследовать эту траекторию →</button></div>`;$('#info').classList.add('open')}
+/* what if */
+function openWI(){const n=nd(S.sel);if(!n||!n.p)return;S.W={n,pf:{...n.pf},ok:0};
+$('#wl').innerHTML=KS.map(k=>`<div class="sl"><label for="s_${k}" style="margin:0">${K[k]}</label><input id="s_${k}" type="range" min="0" max="5" value="${n.pf[k]||0}" data-k="${k}"><span id="v_${k}">${n.pf[k]||0}/5</span></div>`).join('');
+$$('#wl input').forEach(i=>i.oninput=()=>{const k=i.dataset.k,o=n.pf[k]||0,v=+i.value;S.W.pf[k]=v;const s=$('#v_'+k);s.textContent=v==o?v+'/5':o+' → '+v;s.className=v==o?'':'ch';S.W.ok=0;$('#ap').style.display='none'});
+$('#wr').innerHTML='';$('#wi').classList.add('on')}
+function cands(n,pf){const used=chain(n).map(i=>nd(i).p);return P[n.p].x.filter(x=>!used.includes(x)).sort((a,b)=>m(pf,b)-m(pf,a)).slice(0,2)}
+function chg(n,pf){return KS.filter(k=>(pf[k]||0)!=(n.pf[k]||0)).sort((a,b)=>Math.abs((pf[b]||0)-(n.pf[b]||0))-Math.abs((pf[a]||0)-(n.pf[a]||0)))}
+$('#rc').onclick=()=>{const {n,pf}=S.W,ch=chg(n,pf);if(!ch.length){$('#wr').innerHTML='<div class="msg">Измени хотя бы одну компетенцию, чтобы пересчитать траекторию.</div>';return}
+const a=m(n.pf,n.p),b=m(pf,n.p),dl=b-a,cs=cands(n,pf);
+$('#wr').innerHTML=`<div class="cmp"><div><span>${P[n.p].n}</span><b class="${dl>=0?'up':'dn'}">${a}% → ${b}% (${dl>=0?'+':''}${dl} п.п.)</b></div>${cs.map(c=>`<div><span>Новая ветвь: ${P[c].n}</span><b class="up">${m(pf,c)}%</b></div>`).join('')}</div>${cs.length?'':'<div class="msg">Новых подходящих профессий нет: все следующие направления уже на этом пути.</div>'}`;
+S.W.ok=cs.length?1:0;$('#ap').style.display=cs.length?'':'none';if(!cs.length)n.ex=1}
+$('#ap').onclick=()=>{const {n,pf}=S.W,cs=cands(n,pf),lab='+ '+K[chg(n,pf)[0]];
+S.nodes=S.nodes.filter(x=>x.id==n.id||!chain(x).includes(n.id));
+const base=n.a!=null?n.a:0;cs.forEach((c,i)=>{const a=(base+(cs.length==1?0:i?38:-38))*Math.PI/180;S.nodes.push({id:S.id++,p:c,par:n.id,a:a*180/Math.PI,x:n.x+Math.cos(a)*215,y:n.y+Math.sin(a)*215,pf:{...pf},lab});S.fresh.add(S.id-1)});
+n.ex=1;$('#wi').classList.remove('on');$('#info').classList.remove('open');draw()}
+$('#cn').onclick=()=>$('#wi').classList.remove('on');
+function ask(){$('#cf').classList.add('on')}
+$('#cy').onclick=()=>{$('#cf').classList.remove('on');$('#info').classList.remove('open');reset();fit()};
+addEventListener('resize',()=>S.built&&$('#tree').classList.contains('on')&&fit());
+</script></body></html>
